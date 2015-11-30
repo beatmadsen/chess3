@@ -2,7 +2,7 @@ package com.madsen.chess.name
 
 import scala.collection.SortedSet
 
-sealed trait File {
+sealed trait File extends Neighbour[File] {
 }
 
 
@@ -27,6 +27,9 @@ object File {
   private[File] abstract class LetterFile(val letter: Char) extends File {
 
     override def toString: String = letter.toString
+
+
+    def neighbourInDirection(direction: Direction): File = ???
   }
 
 

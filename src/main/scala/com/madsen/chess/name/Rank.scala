@@ -1,11 +1,13 @@
 package com.madsen.chess.name
 
+import com.madsen.chess.name.Direction._
+
 import scala.collection.SortedSet
 
 /**
   * Created by erikmadsen on 30/11/2015.
   */
-sealed trait Rank {
+sealed trait Rank extends Neighbour[Rank] {
 }
 
 object Rank {
@@ -26,6 +28,13 @@ object Rank {
   private[Rank] abstract class NumberRank(val number: Char) extends Rank {
 
     override def toString: String = number.toString
+
+
+    def neighbourInDirection(direction: Direction): Rank = direction match {
+      case N | NE | NW ⇒ ranks((number + 1) % 8)
+      case S | SE | SW ⇒ ranks((number + 7) % 8)
+      case _ ⇒ this
+    }
   }
 
 

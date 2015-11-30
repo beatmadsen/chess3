@@ -10,12 +10,24 @@ object Name {
   def apply(file: Char, rank: Char): Name = NameImpl(File(file), Rank(rank))
 
 
-  private[Name] case class NameImpl(file: File, rank: Rank) extends Name
+  private[Name] case class NameImpl(file: File, rank: Rank) extends Name {
+
+    def neighbourInDirection(direction: Direction): Name = {
+
+
+      ???
+    }
+  }
 
 
 }
 
 
-sealed trait Name {
+trait Neighbour[T] {
+  self: T ⇒
+
+  def neighbourInDirection(direction: Direction): T
 }
 
+sealed trait Name extends Neighbour[Name] {
+}
