@@ -1,5 +1,7 @@
 package com.madsen.chess.name
 
+import scala.collection.SortedSet
+
 sealed trait File {
 }
 
@@ -9,7 +11,9 @@ sealed trait File {
   */
 object File {
 
-  private val files: Vector[File] = Vector(A, B, C, D, E, F, G, H)
+  private implicit val fileOrdering: Ordering[LetterFile] = Ordering.by(_.letter)
+
+  private val files: Vector[File] = SortedSet(A, B, C, D, E, F, G, H).toVector
 
 
   def apply(letter: Char): File = {
@@ -21,10 +25,6 @@ object File {
 
 
   private[File] abstract class LetterFile(val letter: Char) extends File {
-
-    require(letter >= 'A')
-    require(letter <= 'H')
-
 
     override def toString: String = letter.toString
   }
