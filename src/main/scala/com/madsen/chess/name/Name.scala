@@ -12,7 +12,7 @@ object Name {
 
   private[Name] case class NameImpl(file: File, rank: Rank) extends Name {
 
-    def neighbourInDirection(direction: Direction): Name = {
+    def neighbour(direction: Direction): Name = {
 
 
       ???
@@ -23,11 +23,12 @@ object Name {
 }
 
 
-trait Neighbour[T] {
-  self: T ⇒
+trait Neighbour {
+  type T >: this.type <: Neighbour // this.type < T < Neighbour
 
-  def neighbourInDirection(direction: Direction): T
+  def neighbour(direction: Direction): T
 }
 
-sealed trait Name extends Neighbour[Name] {
+sealed trait Name extends Neighbour {
+  type T = Name
 }

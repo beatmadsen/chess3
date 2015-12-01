@@ -7,7 +7,8 @@ import scala.collection.SortedSet
 /**
   * Created by erikmadsen on 30/11/2015.
   */
-sealed trait Rank extends Neighbour[Rank] {
+sealed trait Rank extends Neighbour {
+  type T = Rank
 }
 
 object Rank {
@@ -30,7 +31,7 @@ object Rank {
     override def toString: String = number.toString
 
 
-    def neighbourInDirection(direction: Direction): Rank = direction match {
+    def neighbour(direction: Direction): Rank = direction match {
       case N | NE | NW ⇒ ranks((number + 1) % 8)
       case S | SE | SW ⇒ ranks((number + 7) % 8)
       case _ ⇒ this
