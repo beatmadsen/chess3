@@ -10,10 +10,17 @@ object Name {
   def apply(file: Char, rank: Char): Name = NameImpl(File(file), Rank(rank))
 
 
+  val map: Map[(File, Rank), Name] = {
+
+    ???
+  }
+
   private[Name] case class NameImpl(file: File, rank: Rank) extends Name {
 
-    def neighbour(direction: Direction): Name = {
+    def neighbour(direction: Direction): Option[Name] = {
 
+      val nFile = file neighbour direction
+      val nRank = rank neighbour direction
 
       ???
     }
@@ -26,7 +33,7 @@ object Name {
 trait Neighbour {
   type T >: this.type <: Neighbour // this.type < T < Neighbour
 
-  def neighbour(direction: Direction): T
+  def neighbour(direction: Direction): Option[T]
 }
 
 sealed trait Name extends Neighbour {

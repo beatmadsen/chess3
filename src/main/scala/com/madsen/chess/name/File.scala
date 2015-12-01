@@ -1,5 +1,7 @@
 package com.madsen.chess.name
 
+import com.madsen.chess.name.Direction.{E ⇒ East, NE, NW, SE, SW, W}
+
 import scala.collection.SortedSet
 
 sealed trait File extends Neighbour {
@@ -30,7 +32,18 @@ object File {
     override def toString: String = letter.toString
 
 
-    def neighbour(direction: Direction): File = ???
+    def neighbour(direction: Direction): Option[File] = direction match {
+
+      case W | NW | SW ⇒
+        if (letter == 'A') None
+        else Some(files((letter - 'A' + 7) % 8))
+
+      case East | NE | SE ⇒
+        if (letter == 'H') None
+        else Some(files((letter - 'A' + 1) % 8))
+
+      case _ ⇒ Some(this)
+    }
   }
 
 

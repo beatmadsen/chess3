@@ -11,6 +11,7 @@ sealed trait Rank extends Neighbour {
   type T = Rank
 }
 
+
 object Rank {
 
   private implicit val rankOrdering: Ordering[NumberRank] = Ordering.by(_.number)
@@ -31,10 +32,14 @@ object Rank {
     override def toString: String = number.toString
 
 
-    def neighbour(direction: Direction): Rank = direction match {
-      case N | NE | NW ⇒ ranks((number + 1) % 8)
-      case S | SE | SW ⇒ ranks((number + 7) % 8)
-      case _ ⇒ this
+    def neighbour(direction: Direction): Option[Rank] = direction match {
+      case N | NE | NW ⇒
+        if (number == 8) None
+        else Some(ranks(number % 8))
+      case S | SE | SW ⇒
+        if (number == 1) None
+        else Some(ranks((number - 2) % 8))
+      case _ ⇒ Some(this)
     }
   }
 
