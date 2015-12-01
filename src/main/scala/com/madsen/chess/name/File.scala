@@ -9,9 +9,6 @@ sealed trait File extends Neighbour {
 }
 
 
-/**
-  * Created by erikmadsen on 30/11/2015.
-  */
 object File {
 
   private implicit val fileOrdering: Ordering[LetterFile] = Ordering.by(_.letter)
@@ -25,6 +22,9 @@ object File {
 
     files(index)
   }
+
+
+  def values: Iterable[File] = files
 
 
   private[File] abstract class LetterFile(val letter: Char) extends File {

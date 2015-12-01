@@ -2,6 +2,17 @@ package com.madsen.chess.name
 
 object Name {
 
+  val map: Map[(File, Rank), Name] = {
+
+    val tuples: Iterable[((File, Rank), NameImpl)] = for {
+      f ← File.values
+      r ← Rank.values
+    } yield (f, r) → NameImpl(f, r)
+
+    tuples.toMap
+  }
+
+
   def apply(name: String): Name = (name: Seq[Char]) match {
     case Seq(file, rank) ⇒ apply(file, rank)
   }
@@ -10,20 +21,14 @@ object Name {
   def apply(file: Char, rank: Char): Name = NameImpl(File(file), Rank(rank))
 
 
-  val map: Map[(File, Rank), Name] = {
-
-    ???
-  }
-
   private[Name] case class NameImpl(file: File, rank: Rank) extends Name {
 
-    def neighbour(direction: Direction): Option[Name] = {
-
-      val nFile = file neighbour direction
-      val nRank = rank neighbour direction
-
-      ???
-    }
+    def neighbour(direction: Direction): Option[Name] = for {
+      f ← file neighbour direction
+      r ← rank neighbour direction
+      tuple = (f, r)
+      name ← map get tuple
+    } yield name
   }
 
 

@@ -4,9 +4,6 @@ import com.madsen.chess.name.Direction._
 
 import scala.collection.SortedSet
 
-/**
-  * Created by erikmadsen on 30/11/2015.
-  */
 sealed trait Rank extends Neighbour {
   type T = Rank
 }
@@ -25,6 +22,9 @@ object Rank {
 
     ranks(index)
   }
+
+
+  def values: Iterable[Rank] = ranks
 
 
   private[Rank] abstract class NumberRank(val number: Char) extends Rank {

@@ -18,6 +18,7 @@ object Direction {
 
 
   private[Direction] abstract class NumberDirection(val number: Char) extends Direction {
+
     def next: Direction = directions((number + 1) % 8)
 
 
