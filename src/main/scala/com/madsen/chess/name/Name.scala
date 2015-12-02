@@ -23,6 +23,12 @@ object Name {
 
   private[Name] case class NameImpl(file: File, rank: Rank) extends Name {
 
+    def follow(direction: Direction): Seq[Name] =
+      neighbour(direction).toStream flatMap { name ⇒
+        name #:: (name follow direction).toStream
+      }
+
+
     def neighbour(direction: Direction): Option[Name] = for {
       f ← file neighbour direction
       r ← rank neighbour direction
@@ -43,4 +49,6 @@ trait Neighbour {
 
 sealed trait Name extends Neighbour {
   type T = Name
+
+  def follow(direction: Direction): Seq[Name]
 }
