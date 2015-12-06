@@ -2,7 +2,7 @@ package com.madsen.chess.name
 
 object Name {
 
-  val map: Map[(File, Rank), Name] = {
+  private val map: Map[(File, Rank), Name] = {
 
     val tuples: Iterable[((File, Rank), NameImpl)] = for {
       f ← File.values
