@@ -35,6 +35,14 @@ object Name {
       tuple = (f, r)
       name ← map get tuple
     } yield name
+
+
+    def knightDestinationsFromHere: Set[Name] = Direction.Normal flatMap { direction ⇒
+      (follow(direction) drop 1).headOption.toSet flatMap { name ⇒
+        val (a: Direction, b: Direction) = direction.orthogonal
+        name.neighbour(a) ++ name.neighbour(b)
+      }
+    }
   }
 
 
@@ -51,4 +59,7 @@ sealed trait Name extends Neighbour {
   type T = Name
 
   def follow(direction: Direction): Seq[Name]
+
+
+  def knightDestinationsFromHere: Set[Name]
 }
